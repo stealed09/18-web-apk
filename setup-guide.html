@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Setup — Google Sheets Config</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0D0515;
+      color: #E0E0F0;
+      padding: 16px;
+      line-height: 1.7;
+    }
+    .container { max-width: 640px; margin: 0 auto; }
+
+    h1 { font-size: 24px; text-align: center; margin: 32px 0 8px; }
+    .subtitle { text-align: center; color: #888; font-size: 14px; margin-bottom: 32px; }
+
+    .step-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 16px 0;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center; justify-content: center;
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #FF2D78, #B829DD);
+      color: white;
+      font-size: 14px; font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .step-card h2 { font-size: 17px; margin-bottom: 12px; }
+    .step-card p { font-size: 13px; color: #999; margin-bottom: 8px; }
+
+    .code-block {
+      background: #0a0a14;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 16px;
+      font-family: monospace;
+      font-size: 12px;
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+
+    .code-block .key { color: #FF7EB3; }
+    .code-block .str { color: #00E676; }
+
+    .highlight-box {
+      background: rgba(0, 230, 118, 0.06);
+      border: 1px solid rgba(0, 230, 118, 0.15);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+
+    .highlight-box h3 { font-size: 14px; color: #00E676; margin-bottom: 8px; }
+    .highlight-box p { font-size: 12px; color: #888; }
+
+    .warning-box {
+      background: rgba(255, 193, 7, 0.06);
+      border: 1px solid rgba(255, 193, 7, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+
+    .warning-box h3 { font-size: 14px; color: #FFC107; margin-bottom: 8px; }
+    .warning-box p { font-size: 12px; color: #888; }
+
+    .img-placeholder {
+      background: #1a1a2e;
+      border: 1px dashed rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 40px 20px;
+      text-align: center;
+      color: #444;
+      font-size: 13px;
+      margin: 12px 0;
+    }
+
+    ol, ul { padding-left: 20px; margin: 12px 0; }
+    li { font-size: 13px; color: #999; margin: 8px 0; }
+    li strong { color: #E0E0F0; }
+
+    .footer {
+      text-align: center;
+      padding: 32px;
+      font-size: 11px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <h1>🛠️ Developer Setup Guide</h1>
+  <p class="subtitle">One-time setup to enable client to update APK via Google Sheets</p>
+
+  <!-- STEP 1 -->
+  <div class="step-card">
+    <div class="step-num">1</div>
+    <h2>Create Google Sheet</h2>
+    <ol>
+      <li>Go to <strong>sheets.google.com</strong></li>
+      <li>Create a new blank spreadsheet</li>
+      <li>Name it <strong>"APK Config"</strong></li>
+    </ol>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step-card">
+    <div class="step-num">2</div>
+    <h2>Add Headers & Data</h2>
+    <p>Fill in the sheet exactly like this:</p>
+
+    <div class="code-block" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; padding: 0; overflow: hidden;">
+      <div style="background: #1a1a2e; padding: 10px; font-weight: bold;">apk_link</div>
+      <div style="background: #1a1a2e; padding: 10px; font-weight: bold;">version</div>
+      <div style="background: #1a1a2e; padding: 10px; font-weight: bold;">size</div>
+      <div style="background: #1a1a2e; padding: 10px; font-weight: bold;">updated</div>
+      <div style="padding: 10px; color: #00E676; font-size: 10px;">https://github.com/...</div>
+      <div style="padding: 10px; color: #00E676;">v1.0</div>
+      <div style="padding: 10px; color: #00E676;">24.5 MB</div>
+      <div style="padding: 10px; color: #00E676;">Jan 2025</div>
+    </div>
+
+    <p style="margin-top: 12px;"><strong>Row 1:</strong> Headers (apk_link, version, size, updated)</p>
+    <p><strong>Row 2:</strong> Actual values (this is what client will edit)</p>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step-card">
+    <div class="step-num">3</div>
+    <h2>Make Sheet Public</h2>
+    <ol>
+      <li>Click <strong>Share</strong> button (top right)</li>
+      <li>Under "General access", select <strong>"Anyone with the link"</strong></li>
+      <li>Set role to <strong>"Viewer"</strong> (we only need read access)</li>
+      <li>Click <strong>Done</strong></li>
+    </ol>
+
+    <div class="warning-box">
+      <h3>⚠️ Important</h3>
+      <p>If you want client to EDIT the sheet, set role to "Editor". Otherwise they can only view but not change.</p>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step-card">
+    <div class="step-num">4</div>
+    <h2>Get Sheet ID</h2>
+    <p>Look at your browser URL. It will look like:</p>
+
+    <div class="code-block">
+      https://docs.google.com/spreadsheets/d/<span class="str" style="background: rgba(0,230,118,0.1); padding: 2px 6px; border-radius: 4px;">1A2B3C4D5E6F7G8H9I0J</span>/edit
+    </div>
+
+    <p style="margin-top: 8px;">The highlighted part is your <strong>SHEET_ID</strong>. Copy it!</p>
+
+    <div class="highlight-box">
+      <h3>✅ Example Sheet IDs</h3>
+      <p>
+        <code style="color: #00E676;">1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms</code><br>
+        <code style="color: #00E676;">1a2b3c4d5e6f7g8h9i0jklmnopqrstuvwxyz</code>
+      </p>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step-card">
+    <div class="step-num">5</div>
+    <h2>Paste Sheet ID in Code</h2>
+    <p>Open <strong>index.html</strong> and find this line (around line 1041):</p>
+
+    <div class="code-block">
+      <span class="key">const</span> SHEET_ID = <span class="str">"YOUR_SHEET_ID_HERE"</span>;
+    </div>
+
+    <p>Replace <code>YOUR_SHEET_ID_HERE</code> with your actual Sheet ID:</p>
+
+    <div class="code-block">
+      <span class="key">const</span> SHEET_ID = <span class="str">"1A2B3C4D5E6F7G8H9I0J"</span>;
+    </div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step-card">
+    <div class="step-num">6</div>
+    <h2>Deploy to Netlify</h2>
+    <ol>
+      <li>Save <strong>index.html</strong></li>
+      <li>Drag & drop the file/folder to Netlify</li>
+      <li>Your site is live!</li>
+    </ol>
+  </div>
+
+  <!-- STEP 7 -->
+  <div class="step-card">
+    <div class="step-num">7</div>
+    <h2>Share Sheet Link with Client</h2>
+    <p>Send the client the Google Sheet edit link:</p>
+
+    <div class="code-block">
+      https://docs.google.com/spreadsheets/d/<span class="str">YOUR_SHEET_ID</span>/edit
+    </div>
+
+    <p style="margin-top: 8px;">Also send them <strong>guide.html</strong> — it has simple visual instructions in Hindi!</p>
+  </div>
+
+  <!-- DONE -->
+  <div class="highlight-box" style="text-align: center;">
+    <h3>🎉 Setup Complete!</h3>
+    <p style="margin-top: 8px;">Now client can simply:<br>
+    <strong>Open Sheet → Paste new APK link in A2 → Done!</strong><br>
+    Website automatically fetches latest link every time it loads.</p>
+  </div>
+
+  <!-- How it works -->
+  <div class="step-card" style="margin-top: 32px;">
+    <h2>📊 How it Works (Technical)</h2>
+    <ul>
+      <li>Google Sheets can be accessed as JSON via special URL</li>
+      <li>Website fetches <code>/gviz/tq?tqx=out:json</code> endpoint</li>
+      <li>Parses row 2 values and updates <code>CONFIG</code> object</li>
+      <li>Download button uses <code>CONFIG.APK_LINK</code></li>
+      <li>Has fallback values if fetch fails</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    Setup once, update forever ❤️
+  </div>
+
+</div>
+</body>
+</html>

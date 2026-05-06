@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A to Z Guide — APK Upload + Link Update</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Poppins',sans-serif;background:#08060f;color:#E8E0F0;min-height:100vh;line-height:1.8}
+    .c{max-width:480px;margin:0 auto;padding:16px 16px 40px}
+
+    /* Glow bg */
+    body::before{content:'';position:fixed;top:-100px;left:-50px;width:300px;height:300px;background:radial-gradient(circle,rgba(255,45,120,0.12),transparent 70%);border-radius:50%;filter:blur(80px);z-index:0;pointer-events:none}
+    body::after{content:'';position:fixed;bottom:-100px;right:-50px;width:350px;height:350px;background:radial-gradient(circle,rgba(123,47,255,0.1),transparent 70%);border-radius:50%;filter:blur(80px);z-index:0;pointer-events:none}
+
+    /* Header */
+    .hdr{text-align:center;padding:48px 16px 24px;position:relative;z-index:1}
+    .hdr-e{font-size:80px;animation:bounce 2s ease-in-out infinite}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+    .hdr h1{font-size:24px;font-weight:900;margin:16px 0 8px;background:linear-gradient(135deg,#FF2D78,#FFD600);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hdr p{font-size:14px;color:#9B8CB5}
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;margin-top:14px;background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.2);border-radius:100px;color:#00E676;font-size:13px;font-weight:700}
+
+    /* Divider */
+    .dv{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.07),transparent);margin:32px 0}
+
+    /* Section title */
+    .st{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;margin:28px 0 16px;color:#fff;position:relative;z-index:1}
+    .st .e{font-size:28px}
+
+    /* Step card */
+    .sc{background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.06);border-radius:22px;padding:28px 22px;margin:16px 0;position:relative;z-index:1}
+    .sc.pink{background:linear-gradient(135deg,rgba(255,45,120,0.07),rgba(123,47,255,0.07));border-color:rgba(255,45,120,0.18)}
+    .sc.green{background:linear-gradient(135deg,rgba(0,230,118,0.07),rgba(0,212,255,0.07));border-color:rgba(0,230,118,0.18)}
+
+    .snum{position:absolute;top:-16px;left:22px;width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#FF2D78,#B829DD);color:#fff;font-size:18px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(255,45,120,0.35)}
+    .snum.blue{background:linear-gradient(135deg,#00D4FF,#7B2FFF)}
+    .snum.grn{background:linear-gradient(135deg,#00E676,#00D4FF)}
+
+    .si{font-size:52px;text-align:center;margin:14px 0 16px}
+    .sc h2{font-size:17px;font-weight:700;text-align:center;margin-bottom:10px}
+    .sc p{font-size:13px;color:#9B8CB5;text-align:center}
+    .sc p.left{text-align:left}
+
+    /* Action */
+    .act{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;margin:12px 0;background:rgba(255,45,120,0.05);border:1px solid rgba(255,45,120,0.12);border-radius:14px;font-size:13px;color:#C0A8D8}
+    .act.blue-act{background:rgba(0,212,255,0.05);border-color:rgba(0,212,255,0.12)}
+    .act.green-act{background:rgba(0,230,118,0.05);border-color:rgba(0,230,118,0.12)}
+    .act .e{font-size:22px;flex-shrink:0;margin-top:2px}
+    .act strong{color:#FF7EB3}
+    .act.blue-act strong{color:#00D4FF}
+    .act.green-act strong{color:#00E676}
+
+    /* GitHub mock */
+    .gh{background:#0d1117;border:1px solid #30363d;border-radius:14px;overflow:hidden;margin:18px 0}
+    .gh-bar{background:#161b22;padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #30363d;flex-wrap:wrap}
+    .gh-icon{width:20px;height:20px;fill:#8b949e;flex-shrink:0}
+    .gh-tab{padding:6px 14px;font-size:12px;color:#8b949e;border-bottom:2px solid transparent;cursor:default}
+    .gh-tab.active{color:#f0f6fc;border-bottom-color:#f78166}
+    .gh-body{padding:16px}
+    .gh-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#238636;border:1px solid #2ea043;border-radius:6px;color:#fff;font-size:12px;font-weight:600;cursor:default}
+    .gh-btn.outline{background:#21262d;border-color:#30363d;color:#c9d1d9}
+    .gh-btn.sm{padding:5px 10px;font-size:11px}
+    .gh-link{color:#58a6ff;font-size:13px;text-decoration:none;cursor:default}
+    .gh-input{width:100%;padding:8px 12px;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#c9d1d9;font-size:13px;margin:6px 0}
+    .gh-textarea{width:100%;height:80px;padding:10px 12px;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#c9d1d9;font-size:12px;margin:6px 0;font-family:monospace;resize:none}
+    .gh-file{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.15);border-radius:8px;color:#7ee787;font-size:13px;margin:8px 0}
+    .gh-upload{border:2px dashed #30363d;border-radius:10px;padding:28px 16px;text-align:center;color:#484f58;font-size:13px;margin:10px 0;cursor:default}
+    .gh-upload:hover{border-color:#58a6ff}
+    .gh-tag{display:inline-block;padding:4px 10px;background:#1f6feb22;border:1px solid #1f6feb44;border-radius:20px;color:#58a6ff;font-size:12px;font-weight:600}
+    .gh-label{font-size:12px;color:#8b949e;margin:10px 0 4px}
+
+    /* Code block */
+    .code{background:#0a0a12;border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;font-family:monospace;font-size:13px;line-height:2.2;margin:14px 0;overflow-x:auto}
+    .code .k{color:#ff7b72}
+    .code .s{color:#7ee787}
+    .code .s.hl{background:rgba(0,230,118,0.1);padding:2px 6px;border-radius:4px;border:1px dashed rgba(0,230,118,0.3)}
+    .code .b{color:#484f58}
+    .code .ln{color:#484f58;margin-right:12px;user-select:none}
+
+    /* Arrow */
+    .arr{text-align:center;font-size:36px;color:#FF2D78;margin:6px 0;animation:abounce 1s ease-in-out infinite}
+    .arr.g{color:#00E676}
+    @keyframes abounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+    /* Success box */
+    .sbox{background:linear-gradient(135deg,rgba(0,230,118,0.08),rgba(0,212,255,0.08));border:2px solid rgba(0,230,118,0.2);border-radius:22px;padding:30px 24px;text-align:center;margin:24px 0;position:relative;z-index:1}
+    .sbox .e{font-size:56px}
+    .sbox h3{font-size:20px;font-weight:800;color:#00E676;margin:12px 0 8px}
+    .sbox p{font-size:14px;color:#9B8CB5}
+
+    /* Warning */
+    .warn{display:flex;align-items:flex-start;gap:12px;padding:16px;margin:14px 0;background:rgba(255,193,7,0.06);border:1px solid rgba(255,193,7,0.18);border-radius:14px;font-size:13px;color:#FFD54F}
+    .warn .e{font-size:22px;flex-shrink:0}
+
+    /* Big link */
+    .biglink{display:block;width:100%;padding:18px;margin:14px 0;text-align:center;text-decoration:none;border-radius:14px;color:#fff;font-size:15px;font-weight:700;box-shadow:0 6px 30px rgba(255,45,120,0.25);transition:all 0.3s;position:relative;z-index:1}
+    .biglink:hover{transform:translateY(-2px);box-shadow:0 10px 40px rgba(255,45,120,0.35)}
+    .biglink.pink{background:linear-gradient(135deg,#FF2D78,#B829DD)}
+    .biglink.blue{background:linear-gradient(135deg,#00D4FF,#7B2FFF)}
+    .biglink.green{background:linear-gradient(135deg,#00E676,#00D4FF);color:#000}
+
+    /* Flow */
+    .flow{display:flex;flex-direction:column;align-items:center;gap:4px;margin:20px 0}
+    .fi{width:100%;padding:14px 18px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;font-size:13px;font-weight:600;text-align:center;color:#C0A8D8}
+    .fi strong{color:#FF7EB3}
+    .fi .g{color:#00E676}
+    .fa{color:#FF2D78;font-size:22px}
+
+    /* Tip */
+    .tip{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:14px;margin:10px 0;position:relative;z-index:1}
+    .tip .e{font-size:22px;flex-shrink:0}
+    .tip p{font-size:12px;color:#9B8CB5}
+    .tip strong{color:#E8E0F0}
+
+    /* FAQ */
+    .faq{padding:16px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:14px;margin:10px 0}
+    .faq-q{font-size:13px;font-weight:700;color:#FF7EB3;margin-bottom:6px}
+    .faq-a{font-size:12px;color:#9B8CB5}
+
+    /* Phase label */
+    .phase{text-align:center;padding:12px;margin:20px 0 0;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#FF2D78;position:relative;z-index:1}
+    .phase.b{color:#00D4FF}
+    .phase.g{color:#00E676}
+
+    .ftr{text-align:center;padding:40px 20px;font-size:11px;color:#2a2240;position:relative;z-index:1}
+
+    @media(max-width:380px){.hdr h1{font-size:20px}.si{font-size:44px}.code{font-size:11px}}
+  </style>
+</head>
+<body>
+<div class="c">
+
+  <!-- ============ HEADER ============ -->
+  <header class="hdr">
+    <div class="hdr-e">📱</div>
+    <h1>A to Z Complete Guide</h1>
+    <p>APK Upload + Link Update — Sab Hindi Mein</p>
+    <div class="badge">⏱️ Poora process: 2-3 minute</div>
+  </header>
+
+  <div class="dv"></div>
+
+  <!-- ============ OVERVIEW ============ -->
+  <h2 class="st"><span class="e">🗺️</span> Poora Process Overview</h2>
+
+  <div class="flow">
+    <div class="fi">📤 <strong>Part A:</strong> GitHub pe naya APK upload karo</div>
+    <div class="fa">↓</div>
+    <div class="fi">📋 APK ka <strong>link copy</strong> karo</div>
+    <div class="fa">↓</div>
+    <div class="fi">✏️ <strong>Part B:</strong> config.json mein link paste karo</div>
+    <div class="fa">↓</div>
+    <div class="fi"><span class="g">✅ Done! Website pe naya APK aa gaya!</span></div>
+  </div>
+
+  <div class="dv"></div>
+
+  <!-- ======================================================= -->
+  <!--                    PART A: APK UPLOAD                    -->
+  <!-- ======================================================= -->
+
+  <div class="phase">── PART A ──</div>
+  <h2 class="st"><span class="e">📤</span> GitHub pe APK Upload karo</h2>
+
+  <!-- STEP A1 -->
+  <div class="sc">
+    <div class="snum">A1</div>
+    <div class="si">🌐</div>
+    <h2>GitHub Website Kholo</h2>
+    <p>Phone ke browser mein yeh link kholo:</p>
+
+    <a href="https://github.com/stealed09/my-app-releases/releases/new" target="_blank" class="biglink pink">
+      📤 Releases Page Kholo — Tap Here
+    </a>
+
+    <div class="warn">
+      <span class="e">⚠️</span>
+      <span>Pehle GitHub mein <strong>login</strong> hona zaroori hai! Agar login nahi ho to pehle login kar lo.</span>
+    </div>
+  </div>
+
+  <div class="arr">↓</div>
+
+  <!-- STEP A2 -->
+  <div class="sc">
+    <div class="snum">A2</div>
+    <div class="si">🏷️</div>
+    <h2>Version Tag Likho</h2>
+    <p>"Choose a tag" field mein naya version number likho</p>
+
+    <!-- GitHub Mock -->
+    <div class="gh">
+      <div class="gh-bar">
+        <svg class="gh-icon" viewBox="0 0 16 16"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Z" fill="#8b949e"/></svg>
+        <span style="font-size:14px;color:#f0f6fc;font-weight:600">Create a new release</span>
+      </div>
+      <div class="gh-body">
+        <div class="gh-label">Choose a tag</div>
+        <div class="gh-input" style="color:#7ee787;font-weight:600">v1.1</div>
+        <div style="font-size:11px;color:#484f58;margin-top:4px">▾ Create new tag: v1.1 on publish</div>
+      </div>
+    </div>
+
+    <div class="act">
+      <span class="e">✏️</span>
+      <span>Har baar <strong>naya version</strong> likho:<br>Pehli baar: <strong>v1.0</strong> → Next: <strong>v1.1</strong> → Phir: <strong>v1.2</strong> → aise badhao</span>
+    </div>
+  </div>
+
+  <div class="arr">↓</div>
+
+  <!-- STEP A3 -->
+  <div class="sc">
+    <div class="snum">A3</div>
+    <div class="si">📝</div>
+    <h2>Title Likho (Optional)</h2>
+    <p>Release ka naam likho — kuch bhi likh sakte ho</p>
+
+    <div class="gh">
+      <div class="gh-body" style="padding:12px 16px">
+        <div class="gh-label">Release title</div>
+        <div class="gh-input" style="color:#c9d1d9">Sexy Chat v1.1 — New Update</div>
+      </div>
+    </div>
+
+    <div class="act">
+      <span class="e">💡</span>
+      <span>Title optional hai — khali bhi chhod sakte ho. Bas version tag zaroori hai.</span>
+    </div>
+  </div>
+
+  <div class="arr">↓</div>
+
+  <!-- STEP A4 -->
+  <div class="sc pink">
+    <div class="snum">A4</div>
+    <div class="si">📎</div>
+    <h2>APK File Upload Karo ⭐</h2>
+    <p>Neeche scroll karo — "Attach binaries" section dikhega</p>
+
+    <div class="gh">
+      <div class="gh-body">
+        <div class="gh-label">Attach binaries by dropping them here or selecting them.</div>
+        <div class="gh-upload">
+          📁 Yahan tap karo → Phone se APK file select karo
+        </div>
+        <div class="gh-file">📦 SEXY.CHAT.apk — 24.5 MB ✓ Uploaded</div>
+      </div>
+    </div>
+
+    <div class="act">
+      <span class="e">👆</span>
+      <span>Upload area pe <strong>tap karo</strong> → Phone storage se <strong>APK file choose karo</strong> → Upload hone do</span>
+    </div>
+
+    <div class="warn">
+      <span class="e">⏳</span>
+      <span><strong>Wait karo!</strong> Upload hone mein 30 sec - 2 min lag sakta hai. Jab ✓ checkmark aaye tab aage badho.</span>
+    </div>
+  </div>
+
+  <div class="arr">↓</div>
+
+  <!-- STEP A5 -->
+  <div class="sc green">
+    <div class="snum grn">A5</div>
+    <div class="si">🚀</div>
+    <h2>"Publish Release" Button Dabao</h2>
+    <p>Page ke neeche hara (green) button hoga — tap karo!</p>
+
+    <div class="gh">
+      <div class="gh-body" style="text-align:center">
+        <div class="gh-btn" style="padding:12px 32px;font-size:14px">🚀 Publish release</div>
+      </div>
+    </div>
+
+    <div class="act green-act">
+      <span class="e">✅</span>
+      <span><strong>Done!</strong> APK upload ho gaya! Ab tumhe Release page pe redirect hoga.</span>
+    </div>
+  </div>
+
+  <div class="arr">↓</div>
+
+  <!-- STEP A6 -->
+  <div class="sc pink">
+    <div class="snum">A6</div>
+    <div class="si">📋</div>
+    <h2>APK Ka Link Copy Karo ⭐</h2>
+    <p>Published release page pe tumhara APK file dikhega</p>
+
+    <div class="gh">
+      <div class="gh-body">
+        <div style="font-size:16px;font-weight:700;color:#f0f6fc;margin-bottom:4px">Sexy Chat v1.1</div>
+        <div style="font-size:12px;color:#484f58;margin-bottom:16px">stealed09 released this just now</div>
+        <div style="font-size:13px;font-weight:600;color:#8b949e;margin-bottom:8px">Assets</div>
+        <div style="border:1px solid #30363d;border-radius:8px;overflow:hidden">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:#161b22">
+            <span style="font-size:13px">📦 <span class="gh-link" style="font-weight:600">SEXY.CHAT.apk</span></span>
+            <span style="font-size:11px;color:#484f58">24.5 MB</span>
+          </div>
+        </div>
+        <div style="margin-top:14px;padding:12px;background:rgba(255,45,120,0.08);border:1px solid rgba(255,45,120,0.2);border-radius:8px;text-align:center">
+          <span style="font-size:24px">👆</span><br>
+          <span style="font-size:13px;color:#FF7EB3;font-weight:600">APK name pe LONG PRESS karo!</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="act">
+      <span class="e">👆</span>
+      <span><strong>"SEXY.CHAT.apk"</strong> text pe finger rakh ke <strong>hold karo (2-3 sec)</strong></span>
+    </div>
+
+    <div class="act blue-act">
+      <span class="e">📋</span>
+      <span>Ek menu aayega — <strong>"Copy link"</strong> ya <strong>"Copy link address"</strong> tap karo</span>
+    </div>
+
+    <div class="sbox" style="margin-top:16px;padding:20px">
+      <h3 style="font-size:16px">✅ Link Copy Ho Gaya!</h3>
+      <p style="font-size:11px">Kuch aisa link copy hua hoga:</p>
+      <div class="code" style="text-align:left;margin-top:8px;font-size:10px">
+        <span class="s">https://github.com/stealed09/my-app-releases/releases/download/v1.1/SEXY.CHAT.apk</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="dv"></div>
+
+  <!-- ======================================================= -->
+  <!--                  PART B: CONFIG UPDATE                   -->
+  <!-- ======================================================= -->
+
+  <div class="phase b">── PART B ──</div>
+  <h2 class="st"><span class="e">✏️</span> config.json Mein Link Paste Karo</h2>
+
+  <!-- STEP B1 -->
+  <div class="sc">
+    <div class="snum blue">B1</div>
+    <div class="si">📂</div>
+    <h2>config.json Edit Page Kholo</h2>
+    <p>Yeh button tap karo — directly editor khulega:</p>
+
+    <a href="https://github.com/stealed09/my-app-releases/edit/main/config.json" target="_blank" class="biglink blue">
+      ✏️ config.json Edit Karo — Tap Here
+    </a>
+  </div>
+
+  <div class="arr">↓</div>
+
+  <!-- STEP B2 -->
+  <div class="sc pink">
+    <div class="snum blue">B2</div>
+    <div class="si">📝</div>
+    <h2>Purana Link Hatao, Naya Paste Karo</h2>
+    <p>Editor mein yeh code dikhega — "apk_link" ke aage ka purana link hatao aur naya paste karo</p>
+
+    <div class="gh">
+      <div class="gh-bar">
+        <svg class="gh-icon" viewBox="0 0 16 16"><path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758Z" fill="#8b949e"/></svg>
+        <span style="font-size:13px;color:#f0f6fc;font-weight:600">Editing config.json</span>
+      </div>
+      <div class="gh-body" style="padding:0">
+        <div class="code" style="margin:0;border:none;border-radius:0;font-size:13px">
+          <span class="ln">1</span><span class="b">{</span><br>
+          <span class="ln">2</span>&nbsp;&nbsp;<span class="k">"apk_link"</span>: <span class="s hl">"👆 NAYA LINK YAHAN PASTE KARO"</span>,<br>
+          <span class="ln">3</span>&nbsp;&nbsp;<span class="k">"version"</span>: <span class="s">"v1.1"</span>,<br>
+          <span class="ln">4</span>&nbsp;&nbsp;<span class="k">"size"</span>: <span class="s">"24.5 MB"</span>,<br>
+          <span class="ln">5</span>&nbsp;&nbsp;<span class="k">"updated"</span>: <span class="s">"Feb 2025"</span><br>
+          <span class="ln">6</span><span class="b">}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="act">
+      <span class="e">1️⃣</span>
+      <span>Line 2 pe jao — <strong>"apk_link"</strong> ke baad jo link hai woh <strong>select karo</strong> (double tap karke)</span>
+    </div>
+
+    <div class="act">
+      <span class="e">2️⃣</span>
+      <span>Purana link <strong>delete karo</strong></span>
+    </div>
+
+    <div class="act">
+      <span class="e">3️⃣</span>
+      <span>Naya link <strong>paste karo</strong> (long press → Paste)</span>
+    </div>
+
+    <div class="warn">
+      <span class="e">⚠️</span>
+      <span><strong>QUOTES MAT HATANA!</strong> Link <strong>" "</strong> ke andar hi hona chahiye. Sirf link change karo, quotes ko mat chhedo!</span>
+    </div>
+
+    <p class="left" style="font-size:12px;color:#666;margin-top:14px">✅ Sahi tarika (quotes ke andar):</p>
+    <div class="code" style="font-size:11px">
+      <span class="k">"apk_link"</span>: <span class="s">"https://github.com/stealed09/my-app-releases/releases/download/v1.1/SEXY.CHAT.apk"</span>
+    </div>
+
+    <p class="left" style="font-size:12px;color:#ff5555">❌ Galat (quotes hata diye):</p>
+    <div class="code" style="font-size:11px;border-color:rgba(255,85,85,0.3)">
+      <span class="k">"apk_link"</span>: <span style="color:#ff5555">https://github.com/... (QUOTES NAHI HAI = ERROR!)</span>
+    </div>
+  </div>
+
+  <div class="arr">↓</div>
+
+  <!-- STEP B3 -->
+  <div class="sc green">
+    <div class="snum grn">B3</div>
+    <div class="si">💾</div>
+    <h2>"Commit Changes" Button Dabao</h2>
+    <p>Page neeche scroll karo — hara button dikhega</p>
+
+    <div class="gh">
+      <div class="gh-body" style="text-align:center">
+        <div class="gh-label" style="text-align:left">Commit message</div>
+        <div class="gh-input" style="color:#8b949e;font-size:12px">Update config.json</div>
+        <div style="margin-top:16px">
+          <div class="gh-btn" style="padding:12px 32px;font-size:14px">💾 Commit changes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="act green-act">
+      <span class="e">👆</span>
+      <span>Green <strong>"Commit changes"</strong> button dabao → Popup aaye to phir se <strong>"Commit changes"</strong> dabao</span>
+    </div>
+  </div>
+
+  <!-- ============ FINAL SUCCESS ============ -->
+  <div class="sbox">
+    <div class="e">🎉</div>
+    <h3>Sab Ho Gaya!</h3>
+    <p>Website pe automatically naya APK aa jayega!<br><strong>Koi redeploy nahi. Koi code change nahi.</strong></p>
+  </div>
+
+  <div class="dv"></div>
+
+  <!-- ============ QUICK LINKS ============ -->
+  <h2 class="st"><span class="e">🔗</span> Quick Links (Bookmark Kar Lo!)</h2>
+
+  <a href="https://github.com/stealed09/my-app-releases/releases/new" target="_blank" class="biglink pink">
+    📤 Naya APK Upload Karo
+  </a>
+
+  <a href="https://github.com/stealed09/my-app-releases/edit/main/config.json" target="_blank" class="biglink blue">
+    ✏️ config.json Edit Karo
+  </a>
+
+  <a href="https://github.com/stealed09/my-app-releases/releases" target="_blank" class="biglink green">
+    📦 Sab Releases Dekho
+  </a>
+
+  <div class="tip">
+    <span class="e">🔖</span>
+    <p><strong>IN TEENO LINKS KO BOOKMARK KAR LO!</strong> Phone browser mein bookmark karo — roz ek tap mein khulenge.</p>
+  </div>
+
+  <div class="dv"></div>
+
+  <!-- ============ DAILY ROUTINE ============ -->
+  <h2 class="st"><span class="e">📅</span> Daily Routine — 2 Minute</h2>
+
+  <div class="flow">
+    <div class="fi">📤 Bookmark se <strong>Releases page</strong> kholo</div>
+    <div class="fa">↓</div>
+    <div class="fi">🏷️ Version tag likho → APK <strong>upload</strong> karo → <strong>Publish</strong></div>
+    <div class="fa">↓</div>
+    <div class="fi">📋 APK pe <strong>long press → Copy link</strong></div>
+    <div class="fa">↓</div>
+    <div class="fi">✏️ Bookmark se <strong>config.json</strong> editor kholo</div>
+    <div class="fa">↓</div>
+    <div class="fi">📝 Purana link hatao → Naya <strong>paste</strong> karo</div>
+    <div class="fa">↓</div>
+    <div class="fi">💾 <strong>"Commit changes"</strong> dabao</div>
+    <div class="fa">↓</div>
+    <div class="fi"><span class="g">✅ DONE! Website updated!</span></div>
+  </div>
+
+  <div class="dv"></div>
+
+  <!-- ============ FAQ ============ -->
+  <h2 class="st"><span class="e">❓</span> Sawaal Jawaab</h2>
+
+  <div class="faq">
+    <div class="faq-q">Q: Koi paisa lagega?</div>
+    <div class="faq-a">❌ Nahi! Sab 100% FREE hai — GitHub free, Vercel free.</div>
+  </div>
+  <div class="faq">
+    <div class="faq-q">Q: Website redeploy karna padega?</div>
+    <div class="faq-a">❌ Nahi! config.json edit karo — website auto-update hoti hai.</div>
+  </div>
+  <div class="faq">
+    <div class="faq-q">Q: Purana APK delete hoga?</div>
+    <div class="faq-a">❌ Nahi! Sab GitHub pe safe rehte hain. Sirf link change hota hai.</div>
+  </div>
+  <div class="faq">
+    <div class="faq-q">Q: Kitni baar update kar sakte hain?</div>
+    <div class="faq-a">✅ Unlimited baar! Din mein 100 baar bhi change karo.</div>
+  </div>
+  <div class="faq">
+    <div class="faq-q">Q: Link paste karte waqt quotes hat gayi?</div>
+    <div class="faq-a">⚠️ Dobara quotes lagao! Link " " ke andar hona chahiye.</div>
+  </div>
+  <div class="faq">
+    <div class="faq-q">Q: Website pe kitni der mein naya link dikhega?</div>
+    <div class="faq-a">✅ 2-5 minute mein. GitHub CDN cache refresh hota hai.</div>
+  </div>
+  <div class="faq">
+    <div class="faq-q">Q: Galti se kuch delete ho gaya to?</div>
+    <div class="faq-a">✅ Tension mat lo! GitHub pe sab history saved rehti hai — developer fix kar dega.</div>
+  </div>
+
+  <div class="ftr">Made with ❤️ — Poora system 100% FREE hai!</div>
+
+</div>
+</body>
+</html>

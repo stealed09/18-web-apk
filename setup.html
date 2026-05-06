@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Setup — GitHub Config Method</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background: #0D0515; color: #E0E0F0; padding: 16px; line-height: 1.7; }
+    .container { max-width: 640px; margin: 0 auto; }
+    h1 { font-size: 24px; text-align: center; margin: 32px 0 8px; }
+    .sub { text-align: center; color: #888; font-size: 14px; margin-bottom: 32px; }
+    .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 24px; margin: 16px 0; }
+    .num { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #FF2D78, #B829DD); color: #fff; font-size: 14px; font-weight: 800; margin-bottom: 12px; }
+    .card h2 { font-size: 17px; margin-bottom: 12px; }
+    .card p { font-size: 13px; color: #999; margin-bottom: 8px; }
+    .code { background: #0a0a14; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 16px; font-family: monospace; font-size: 12px; margin: 12px 0; overflow-x: auto; line-height: 2; }
+    .code .c { color: #666; }
+    .code .k { color: #FF7EB3; }
+    .code .s { color: #00E676; }
+    .ok { background: rgba(0,230,118,0.06); border: 1px solid rgba(0,230,118,0.15); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    .ok h3 { font-size: 14px; color: #00E676; margin-bottom: 8px; }
+    .ok p { font-size: 12px; color: #888; }
+    .warn { background: rgba(255,193,7,0.06); border: 1px solid rgba(255,193,7,0.2); border-radius: 12px; padding: 16px; margin: 16px 0; }
+    .warn h3 { font-size: 14px; color: #FFC107; margin-bottom: 8px; }
+    .warn p { font-size: 12px; color: #888; }
+    ol, ul { padding-left: 20px; margin: 12px 0; }
+    li { font-size: 13px; color: #999; margin: 8px 0; }
+    li strong { color: #E0E0F0; }
+    .ftr { text-align: center; padding: 32px; font-size: 11px; color: #333; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <h1>🛠️ Developer Setup</h1>
+  <p class="sub">One-time setup (3 minutes) — uses GitHub only, 100% FREE</p>
+
+  <div class="ok">
+    <h3>✅ Method: GitHub Config File</h3>
+    <p>config.json file is in the same GitHub repo.<br>
+    Client edits it via GitHub web editor — no extra tools needed!</p>
+  </div>
+
+  <div class="card">
+    <div class="num">1</div>
+    <h2>Files Structure</h2>
+    <p>Your repo should have these files:</p>
+    <div class="code">
+📂 my-app-releases/<br>
+├── 📄 index.html&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c">← Main website</span><br>
+├── 📄 guide.html&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c">← Client guide (Hindi)</span><br>
+├── 📄 setup.html&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c">← This file</span><br>
+├── 📄 config.json&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c">← APK link config ⭐</span><br>
+├── 📄 vercel.json&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="c">← Vercel routing</span><br>
+├── 📄 README.md<br>
+└── 📄 .gitignore
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="num">2</div>
+    <h2>config.json Structure</h2>
+    <p>This is the config file that client will edit:</p>
+    <div class="code">
+<span class="c">// config.json</span><br>
+{<br>
+&nbsp;&nbsp;<span class="k">"apk_link"</span>: <span class="s">"https://github.com/.../app.apk"</span>,<br>
+&nbsp;&nbsp;<span class="k">"version"</span>: <span class="s">"v1.0"</span>,<br>
+&nbsp;&nbsp;<span class="k">"size"</span>: <span class="s">"24.5 MB"</span>,<br>
+&nbsp;&nbsp;<span class="k">"updated"</span>: <span class="s">"Jan 2025"</span><br>
+}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="num">3</div>
+    <h2>Update index.html Config</h2>
+    <p>Find these lines in index.html and set your GitHub details:</p>
+    <div class="code">
+<span class="k">const</span> GITHUB_USER = <span class="s">"stealed09"</span>;<br>
+<span class="k">const</span> GITHUB_REPO = <span class="s">"my-app-releases"</span>;<br>
+<span class="k">const</span> GITHUB_BRANCH = <span class="s">"main"</span>;
+    </div>
+    <p>Also update the fallback APK link.</p>
+  </div>
+
+  <div class="card">
+    <div class="num">4</div>
+    <h2>Update guide.html Links</h2>
+    <p>In guide.html, update the edit links to point to YOUR repo:</p>
+    <div class="code">
+<span class="c">&lt;!-- Change this URL to your repo --&gt;</span><br>
+href="https://github.com/<span class="s">stealed09</span>/<span class="s">my-app-releases</span>/edit/main/config.json"
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="num">5</div>
+    <h2>Push to GitHub & Deploy</h2>
+    <div class="code">
+git add .<br>
+git commit -m "Setup complete"<br>
+git push origin main
+    </div>
+    <ol>
+      <li>Go to <strong>vercel.com</strong></li>
+      <li>Login with GitHub</li>
+      <li><strong>"Add New Project"</strong> → Select repo</li>
+      <li><strong>Deploy</strong> → Done!</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="num">6</div>
+    <h2>Give Client Access</h2>
+    <ol>
+      <li>Add client as <strong>collaborator</strong> on GitHub repo</li>
+      <li>Repo → Settings → Collaborators → Add → Enter their username</li>
+      <li>Send them the <strong>guide page URL</strong>: yoursite.vercel.app/guide</li>
+    </ol>
+    <div class="warn">
+      <h3>⚠️ Client needs GitHub account</h3>
+      <p>They need a free GitHub account to edit config.json. Help them create one if needed.</p>
+    </div>
+  </div>
+
+  <div class="ok" style="text-align: center; margin-top: 32px;">
+    <h3>🎉 Done! Zero Cost Setup</h3>
+    <p>
+      ✅ GitHub — FREE<br>
+      ✅ Vercel — FREE<br>
+      ✅ No Google Sheets<br>
+      ✅ No paid tools<br>
+      ✅ Client edits one file on GitHub — website auto-updates
+    </p>
+  </div>
+
+  <div class="ftr">100% Free setup ❤️</div>
+
+</div>
+</body>
+</html>
