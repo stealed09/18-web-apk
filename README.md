@@ -1,4 +1,4 @@
-# 📱 Sexy Chat — APK Download Website
+# 📱 — APK Download Website
 
 100% FREE APK download landing page with GitHub-based remote config.
 
